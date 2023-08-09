@@ -2,12 +2,15 @@ package com.preonboarding.board;
 
 import com.preonboarding.global.audit.Timestamp;
 import com.preonboarding.member.Member;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Board extends Timestamp {
 
     @Id
@@ -30,4 +33,14 @@ public class Board extends Timestamp {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public Board(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public void updateMember(Member member) {
+        this.member = member;
+    }
 }
