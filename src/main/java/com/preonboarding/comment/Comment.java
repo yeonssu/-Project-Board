@@ -1,6 +1,6 @@
 package com.preonboarding.comment;
 
-import com.preonboarding.audit.Timestamp;
+import com.preonboarding.global.audit.Timestamp;
 import com.preonboarding.board.Board;
 import com.preonboarding.member.Member;
 import lombok.Getter;

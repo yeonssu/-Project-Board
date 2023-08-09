@@ -1,4 +1,4 @@
-package com.preonboarding.audit;
+package com.preonboarding.global.audit;
 
 import java.time.LocalDateTime;
 

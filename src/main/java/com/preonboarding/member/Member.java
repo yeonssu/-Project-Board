@@ -1,6 +1,6 @@
 package com.preonboarding.member;
 
-import com.preonboarding.audit.Timestamp;
+import com.preonboarding.global.audit.Timestamp;
 import lombok.Getter;
 
 import javax.persistence.*;
