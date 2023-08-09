@@ -7,6 +7,7 @@ public class MemberDto {
 
     @Getter
     public static class Signup {
+
         private String email;
 
         private String password;
@@ -16,6 +17,7 @@ public class MemberDto {
 
     @Getter
     public static class Response {
+
         private final Long id;
 
         private final String email;
@@ -28,5 +30,19 @@ public class MemberDto {
             this.email = email;
             this.nickname = nickname;
         }
+
+        public Response(Member member) {
+            this.id = member.getId();
+            this.email = member.getEmail();
+            this.nickname = member.getNickname();
+        }
+    }
+
+    @Getter
+    public static class LoginDto {
+
+        private String email;
+
+        private String password;
     }
 }
