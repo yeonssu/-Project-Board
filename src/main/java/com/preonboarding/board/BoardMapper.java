@@ -1,5 +1,6 @@
 package com.preonboarding.board;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,5 +22,9 @@ public class BoardMapper {
                 .viewCount(board.getViewCount())
                 .likeCount(board.getLikeCount())
                 .build();
+    }
+
+    public Page<BoardDto.Response> toPageResponse(Page<Board> boards) {
+        return boards.map(this::toResponse);
     }
 }
