@@ -1,7 +1,10 @@
 package com.preonboarding.board;
 
+import com.preonboarding.comment.CommentDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class BoardMapper {
@@ -14,17 +17,14 @@ public class BoardMapper {
     }
 
     public BoardDto.Response toResponse(Board board) {
-        return BoardDto.Response.builder()
-                .id(board.getId())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .nickname(board.getMember().getNickname())
-                .viewCount(board.getViewCount())
-                .likeCount(board.getLikeCount())
-                .build();
+        return new BoardDto.Response(board);
     }
 
     public Page<BoardDto.Response> toPageResponse(Page<Board> boards) {
         return boards.map(this::toResponse);
+    }
+
+    public BoardDto.DetailResponse toDetailResponse(Board board, List<CommentDto.Response> comments) {
+        return new BoardDto.DetailResponse(board, comments);
     }
 }

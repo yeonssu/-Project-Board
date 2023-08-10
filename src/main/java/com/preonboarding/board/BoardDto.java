@@ -1,7 +1,10 @@
 package com.preonboarding.board;
 
-import lombok.Builder;
+import com.preonboarding.comment.CommentDto;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class BoardDto {
 
@@ -32,14 +35,30 @@ public class BoardDto {
 
         private final String nickname;
 
-        @Builder
-        public Response(Long id, String title, String content, Long viewCount, Long likeCount, String nickname) {
-            this.id = id;
-            this.title = title;
-            this.content = content;
-            this.viewCount = viewCount;
-            this.likeCount = likeCount;
-            this.nickname = nickname;
+        public Response(Board board) {
+            this.id = board.getId();
+            this.title = board.getTitle();
+            this.content = board.getContent();
+            this.viewCount = board.getViewCount();
+            this.likeCount = board.getLikeCount();
+            this.nickname = board.getMember().getNickname();
+        }
+    }
+
+    @Getter
+    public static class DetailResponse extends Response {
+
+        private final LocalDateTime createdAt;
+
+        private final LocalDateTime updatedAt;
+
+        private final List<CommentDto.Response> comments;
+
+        public DetailResponse(Board board, List<CommentDto.Response> comments) {
+            super(board);
+            this.createdAt = board.getCreatedAt();
+            this.updatedAt = board.getUpdatedAt();
+            this.comments = comments;
         }
     }
 }

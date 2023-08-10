@@ -2,6 +2,9 @@ package com.preonboarding.comment;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class CommentMapper {
 
@@ -19,5 +22,9 @@ public class CommentMapper {
                 .createdAt(comment.getCreatedAt())
                 .updatedAt(comment.getUpdatedAt())
                 .build();
+    }
+
+    public List<CommentDto.Response> toListResponse(List<Comment> comments) {
+        return comments.stream().map(this::toResponse).collect(Collectors.toList());
     }
 }
