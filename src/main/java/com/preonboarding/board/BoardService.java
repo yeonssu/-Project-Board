@@ -3,13 +3,12 @@ package com.preonboarding.board;
 import com.preonboarding.global.exception.CustomException;
 import com.preonboarding.global.exception.ExceptionCode;
 import com.preonboarding.member.MemberPrincipal;
+import com.preonboarding.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -19,6 +18,8 @@ public class BoardService {
     private final BoardMapper boardMapper;
 
     private final BoardRepository boardRepository;
+
+    private final MemberService memberService;
 
     public BoardDto.Response createBoard(BoardDto.Post dto, MemberPrincipal memberPrincipal) {
         Board board = boardMapper.toEntity(dto);
@@ -34,6 +35,13 @@ public class BoardService {
 
     public BoardDto.Response getBoard(Long id) {
         Board board = findVerifiedBoard(id);
+        return boardMapper.toResponse(board);
+    }
+
+    public BoardDto.Response modifyBoard(Long id, BoardDto.Patch dto, MemberPrincipal memberPrincipal) {
+        Board board = findVerifiedBoard(id);
+        memberService.verifySameMember(memberPrincipal.getMember(), board.getMember());
+        board.updateBoard(dto.getTitle(), dto.getContent());
         return boardMapper.toResponse(board);
     }
 

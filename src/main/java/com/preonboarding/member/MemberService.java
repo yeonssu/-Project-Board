@@ -31,7 +31,13 @@ public class MemberService {
         return memberMapper.toResponse(member);
     }
 
-    public void verifyExistEmail(String email) {
+    public void verifySameMember(Member loginMember, Member writer) {
+        if (!loginMember.getEmail().equals(writer.getEmail())) {
+            throw new CustomException(ExceptionCode.MEMBER_NOT_SAME);
+        }
+    }
+
+    private void verifyExistEmail(String email) {
         if (memberRepository.existsByEmail(email)) {
             throw new CustomException(ExceptionCode.MEMBER_EMAIL_EXIST);
         }

@@ -14,6 +14,10 @@ public class BoardDto {
     }
 
     @Getter
+    public static class Patch extends Post {
+    }
+
+    @Getter
     public static class Response {
 
         private final Long id;

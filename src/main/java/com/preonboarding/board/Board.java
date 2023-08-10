@@ -43,4 +43,9 @@ public class Board extends Timestamp {
     public void updateMember(Member member) {
         this.member = member;
     }
+
+    public void updateBoard(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
