@@ -64,6 +64,10 @@ public class Board {
         this.viewCount += 1;
     }
 
+    public void addLikeCount() {
+        likeCount += 1;
+    }
+
     private void setUpdatedAt() {
         this.updatedAt = LocalDateTime.now();
     }

@@ -51,4 +51,10 @@ public class BoardController {
         boardService.deleteBoard(boardId, memberPrincipal);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping("/{board-id}/likes")
+    public ResponseEntity<BoardDto.Response> likeBoard(@PathVariable("board-id") Long boardId) {
+        boardService.likeBoard(boardId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

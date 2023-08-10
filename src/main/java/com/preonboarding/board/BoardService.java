@@ -60,8 +60,13 @@ public class BoardService {
         boardRepository.delete(board);
     }
 
-    public Board findVerifiedBoard(Long id) {
-        return boardRepository.findById(id)
+    public void likeBoard(Long boardId) {
+        Board board = findVerifiedBoard(boardId);
+        board.addLikeCount();
+    }
+
+    public Board findVerifiedBoard(Long boardId) {
+        return boardRepository.findById(boardId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.BOARD_NOT_FOUND));
     }
 
@@ -69,5 +74,4 @@ public class BoardService {
         List<Comment> comments = commentRepository.findAllByBoard_Id(boardId);
         return commentMapper.toListResponse(comments);
     }
-
 }
