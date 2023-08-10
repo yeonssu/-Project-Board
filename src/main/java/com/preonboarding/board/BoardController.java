@@ -31,24 +31,24 @@ public class BoardController {
         return new ResponseEntity<>(new MultiResponse<>(response.getContent(), response), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BoardDto.Response> getBoard(@PathVariable("id") Long id) {
-        BoardDto.Response response = boardService.getBoard(id);
+    @GetMapping("/{board-id}")
+    public ResponseEntity<BoardDto.Response> getBoard(@PathVariable("board-id") Long boardId) {
+        BoardDto.Response response = boardService.getBoard(boardId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<BoardDto.Response> modifyBoard(@PathVariable("id") Long id,
+    @PatchMapping("/{board-id}")
+    public ResponseEntity<BoardDto.Response> modifyBoard(@PathVariable("board-id") Long boardId,
                                                          @RequestBody BoardDto.Patch dto,
                                                          @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        BoardDto.Response response = boardService.modifyBoard(id, dto, memberPrincipal);
+        BoardDto.Response response = boardService.modifyBoard(boardId, dto, memberPrincipal);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<BoardDto.Response> deleteBoard(@PathVariable("id") Long id,
+    @DeleteMapping("/{board-id}")
+    public ResponseEntity<BoardDto.Response> deleteBoard(@PathVariable("board-id") Long boardId,
                                                          @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        boardService.deleteBoard(id, memberPrincipal);
+        boardService.deleteBoard(boardId, memberPrincipal);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -33,21 +33,21 @@ public class BoardService {
         return boardMapper.toPageResponse(boards);
     }
 
-    public BoardDto.Response getBoard(Long id) {
-        Board board = findVerifiedBoard(id);
+    public BoardDto.Response getBoard(Long boardId) {
+        Board board = findVerifiedBoard(boardId);
         board.addViewCount();
         return boardMapper.toResponse(board);
     }
 
-    public BoardDto.Response modifyBoard(Long id, BoardDto.Patch dto, MemberPrincipal memberPrincipal) {
-        Board board = findVerifiedBoard(id);
+    public BoardDto.Response modifyBoard(Long boardId, BoardDto.Patch dto, MemberPrincipal memberPrincipal) {
+        Board board = findVerifiedBoard(boardId);
         memberService.verifySameMember(memberPrincipal.getMember(), board.getMember());
         board.updateBoard(dto.getTitle(), dto.getContent());
         return boardMapper.toResponse(board);
     }
 
-    public void deleteBoard(Long id, MemberPrincipal memberPrincipal) {
-        Board board = findVerifiedBoard(id);
+    public void deleteBoard(Long boardId, MemberPrincipal memberPrincipal) {
+        Board board = findVerifiedBoard(boardId);
         memberService.verifySameMember(memberPrincipal.getMember(), board.getMember());
         boardRepository.delete(board);
     }
