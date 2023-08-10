@@ -28,7 +28,7 @@ public class BoardController {
     }
 
     @GetMapping
-    public ResponseEntity<MultiResponse<BoardDto.Response>> getBoards(@PageableDefault Pageable pageable) {
+    public ResponseEntity<MultiResponse<BoardDto.Response>> getBoards(@PageableDefault(page = 1, size = 30) Pageable pageable) {
         Page<BoardDto.Response> response = boardService.getBoards(pageable);
         return new ResponseEntity<>(new MultiResponse<>(response.getContent(), response), HttpStatus.OK);
     }

@@ -7,6 +7,7 @@ import com.preonboarding.member.MemberPrincipal;
 import com.preonboarding.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +37,7 @@ public class BoardService {
     }
 
     public Page<BoardDto.Response> getBoards(Pageable pageable) {
-        Page<Board> boards = boardRepository.findAll(pageable);
+        Page<Board> boards = boardRepository.findAll(PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort()));
         return boardMapper.toPageResponse(boards);
     }
 
