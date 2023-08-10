@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class CommentController {
     @PostMapping("/boards/{board-id}/comments")
     public ResponseEntity<CommentDto.Response> createComment(@PathVariable("board-id") Long boardId,
                                                              @AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                                             @RequestBody CommentDto.Post dto) {
+                                                             @RequestBody @Valid CommentDto.Post dto) {
         CommentDto.Response response = commentService.createComment(boardId, memberPrincipal, dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -25,7 +27,7 @@ public class CommentController {
     @PatchMapping("/comments/{comment-id}")
     public ResponseEntity<CommentDto.Response> createComment(@PathVariable("comment-id") Long commentId,
                                                              @AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                                             @RequestBody CommentDto.Patch dto) {
+                                                             @RequestBody @Valid CommentDto.Patch dto) {
         CommentDto.Response response = commentService.modifyComment(commentId, memberPrincipal, dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

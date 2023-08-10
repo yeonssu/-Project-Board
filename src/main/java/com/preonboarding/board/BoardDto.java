@@ -3,6 +3,7 @@ package com.preonboarding.board;
 import com.preonboarding.comment.CommentDto;
 import lombok.Getter;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,8 +12,10 @@ public class BoardDto {
     @Getter
     public static class Post {
 
+        @NotBlank
         private String title;
 
+        @NotBlank
         private String content;
     }
 

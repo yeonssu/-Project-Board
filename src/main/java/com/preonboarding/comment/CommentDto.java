@@ -3,6 +3,7 @@ package com.preonboarding.comment;
 import lombok.Builder;
 import lombok.Getter;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class CommentDto {
@@ -10,6 +11,7 @@ public class CommentDto {
     @Getter
     public static class Post {
 
+        @NotBlank
         private String content;
     }
 

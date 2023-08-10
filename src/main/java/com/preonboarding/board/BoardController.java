@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/boards")
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
-    public ResponseEntity<BoardDto.Response> createBoard(@RequestBody BoardDto.Post dto,
+    public ResponseEntity<BoardDto.Response> createBoard(@RequestBody @Valid BoardDto.Post dto,
                                                          @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         BoardDto.Response response = boardService.createBoard(dto, memberPrincipal);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -39,7 +41,7 @@ public class BoardController {
 
     @PatchMapping("/{board-id}")
     public ResponseEntity<BoardDto.Response> modifyBoard(@PathVariable("board-id") Long boardId,
-                                                         @RequestBody BoardDto.Patch dto,
+                                                         @RequestBody @Valid BoardDto.Patch dto,
                                                          @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         BoardDto.Response response = boardService.modifyBoard(boardId, dto, memberPrincipal);
         return new ResponseEntity<>(response, HttpStatus.OK);
