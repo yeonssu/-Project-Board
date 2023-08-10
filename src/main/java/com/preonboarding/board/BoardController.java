@@ -30,4 +30,10 @@ public class BoardController {
         Page<BoardDto.Response> response = boardService.getBoards(pageable);
         return new ResponseEntity<>(new MultiResponse<>(response.getContent(), response), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardDto.Response> getBoard(@PathVariable("id") Long id) {
+        BoardDto.Response response = boardService.getBoard(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
