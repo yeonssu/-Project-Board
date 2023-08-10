@@ -52,7 +52,7 @@ public class BoardService {
         boardRepository.delete(board);
     }
 
-    private Board findVerifiedBoard(Long id) {
+    public Board findVerifiedBoard(Long id) {
         return boardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ExceptionCode.BOARD_NOT_FOUND));
     }

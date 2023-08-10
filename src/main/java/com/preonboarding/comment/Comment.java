@@ -3,6 +3,7 @@ package com.preonboarding.comment;
 import com.preonboarding.global.audit.Timestamp;
 import com.preonboarding.board.Board;
 import com.preonboarding.member.Member;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -26,4 +27,17 @@ public class Comment extends Timestamp {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public Comment(String content) {
+        this.content = content;
+    }
+
+    public void updateBoard(Board board) {
+        this.board = board;
+    }
+
+    public void updateMember(Member member) {
+        this.member = member;
+    }
 }
