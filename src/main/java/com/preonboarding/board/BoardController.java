@@ -1,5 +1,6 @@
 package com.preonboarding.board;
 
+import com.preonboarding.global.dto.MultiResponse;
 import com.preonboarding.member.MemberPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,8 +26,8 @@ public class BoardController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<BoardDto.Response>> getBoards(@PageableDefault Pageable pageable) {
+    public ResponseEntity<MultiResponse<BoardDto.Response>> getBoards(@PageableDefault Pageable pageable) {
         Page<BoardDto.Response> response = boardService.getBoards(pageable);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(new MultiResponse<>(response.getContent(), response), HttpStatus.OK);
     }
 }
