@@ -5,11 +5,13 @@ import com.preonboarding.board.Board;
 import com.preonboarding.member.Member;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Comment extends Timestamp {
 
     @Id
@@ -39,5 +41,9 @@ public class Comment extends Timestamp {
 
     public void updateMember(Member member) {
         this.member = member;
+    }
+
+    public void updateComment(String content) {
+        this.content = content;
     }
 }
