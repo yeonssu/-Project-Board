@@ -1,17 +1,19 @@
 package com.preonboarding.board;
 
-import com.preonboarding.global.audit.Timestamp;
 import com.preonboarding.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Board extends Timestamp {
+public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +36,14 @@ public class Board extends Timestamp {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
     @Builder
     public Board(String title, String content) {
         this.title = title;
@@ -47,5 +57,14 @@ public class Board extends Timestamp {
     public void updateBoard(String title, String content) {
         this.title = title;
         this.content = content;
+        setUpdatedAt();
+    }
+
+    public void addViewCount() {
+        this.viewCount += 1;
+    }
+
+    private void setUpdatedAt() {
+        this.updatedAt = LocalDateTime.now();
     }
 }

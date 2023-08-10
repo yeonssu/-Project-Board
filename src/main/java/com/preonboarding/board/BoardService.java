@@ -35,6 +35,7 @@ public class BoardService {
 
     public BoardDto.Response getBoard(Long id) {
         Board board = findVerifiedBoard(id);
+        board.addViewCount();
         return boardMapper.toResponse(board);
     }
 
