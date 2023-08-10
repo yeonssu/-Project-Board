@@ -29,4 +29,11 @@ public class CommentController {
         CommentDto.Response response = commentService.modifyComment(commentId, memberPrincipal, dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/comments/{comment-id}")
+    public ResponseEntity<CommentDto.Response> createComment(@PathVariable("comment-id") Long commentId,
+                                                             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        commentService.deleteComment(commentId, memberPrincipal);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -37,6 +35,12 @@ public class CommentService {
         memberService.verifySameMember(memberPrincipal.getMember(), comment.getMember());
         comment.updateComment(dto.getContent());
         return commentMapper.toResponse(comment);
+    }
+
+    public void deleteComment(Long commentId, MemberPrincipal memberPrincipal) {
+        Comment comment = findVerifyComment(commentId);
+        memberService.verifySameMember(memberPrincipal.getMember(), comment.getMember());
+        commentRepository.delete(comment);
     }
 
     private Comment findVerifyComment(Long commentId) {
