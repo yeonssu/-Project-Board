@@ -44,4 +44,11 @@ public class BoardController {
         BoardDto.Response response = boardService.modifyBoard(id, dto, memberPrincipal);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BoardDto.Response> deleteBoard(@PathVariable("id") Long id,
+                                                         @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        boardService.deleteBoard(id, memberPrincipal);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -46,6 +46,12 @@ public class BoardService {
         return boardMapper.toResponse(board);
     }
 
+    public void deleteBoard(Long id, MemberPrincipal memberPrincipal) {
+        Board board = findVerifiedBoard(id);
+        memberService.verifySameMember(memberPrincipal.getMember(), board.getMember());
+        boardRepository.delete(board);
+    }
+
     private Board findVerifiedBoard(Long id) {
         return boardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ExceptionCode.BOARD_NOT_FOUND));
