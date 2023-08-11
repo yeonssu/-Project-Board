@@ -13,10 +13,6 @@ public class MemberMapper {
     }
 
     public MemberDto.Response toResponse(Member member) {
-        return MemberDto.Response.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .build();
+        return new MemberDto.Response(member);
     }
 }

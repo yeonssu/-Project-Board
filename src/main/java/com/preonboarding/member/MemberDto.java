@@ -41,13 +41,6 @@ public class MemberDto {
 
         private final String nickname;
 
-        @Builder
-        public Response(Long id, String email, String nickname) {
-            this.id = id;
-            this.email = email;
-            this.nickname = nickname;
-        }
-
         public Response(Member member) {
             this.id = member.getId();
             this.email = member.getEmail();
