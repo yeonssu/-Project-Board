@@ -47,11 +47,11 @@ public class MemberDto {
             this.email = email;
             this.nickname = nickname;
         }
+
         public Response(Member member) {
             this.id = member.getId();
             this.email = member.getEmail();
             this.nickname = member.getNickname();
         }
-
     }
 }

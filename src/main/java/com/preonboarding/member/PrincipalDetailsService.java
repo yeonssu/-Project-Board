@@ -18,7 +18,6 @@ public class PrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         Member member = memberRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다."));
-
         return MemberPrincipal.of(member);
     }
 }
