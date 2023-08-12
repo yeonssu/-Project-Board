@@ -21,17 +21,16 @@ public class MemberService {
 
     private final AuthorityUtils authorityUtils;
 
-    public MemberDto.Response createMember(MemberDto.Signup dto) {
+    public MemberDto.Response create(MemberDto.Signup dto) {
         verifyExistEmail(dto.getEmail());
         verifyExistNickname(dto.getNickname());
-        Member member = memberMapper.toEntity(dto);
-        member.updatePassword(passwordEncoder.encode(dto.getPassword()));
-        member.updateRoles(authorityUtils.createRoles());
+        String password = passwordEncoder.encode(dto.getPassword());
+        Member member = memberMapper.toEntity(dto, password, authorityUtils.createRoles());
         memberRepository.save(member);
         return memberMapper.toResponse(member);
     }
 
-    public void verifySameMember(Member loginMember, Member writer) {
+    public void compareMembers(Member loginMember, Member writer) {
         if (!loginMember.getEmail().equals(writer.getEmail())) {
             throw new CustomException(ExceptionCode.MEMBER_NOT_SAME);
         }

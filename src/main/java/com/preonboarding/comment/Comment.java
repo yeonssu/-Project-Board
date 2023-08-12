@@ -16,30 +16,22 @@ public class Comment extends Timestamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
     private Long id;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "board_id")
+    @JoinColumn
     private Board board;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn
     private Member member;
 
-    @Builder
-    public Comment(String content) {
+    public Comment(String content, Board board, Member member) {
         this.content = content;
-    }
-
-    public void updateBoard(Board board) {
         this.board = board;
-    }
-
-    public void updateMember(Member member) {
         this.member = member;
     }
 

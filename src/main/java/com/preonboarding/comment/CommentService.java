@@ -1,5 +1,6 @@
 package com.preonboarding.comment;
 
+import com.preonboarding.board.Board;
 import com.preonboarding.board.BoardService;
 import com.preonboarding.global.exception.CustomException;
 import com.preonboarding.global.exception.ExceptionCode;
@@ -22,29 +23,29 @@ public class CommentService {
 
     private final MemberService memberService;
 
-    public CommentDto.Response createComment(Long boardId, MemberPrincipal memberPrincipal, CommentDto.Post dto) {
-        Comment comment = commentMapper.toEntity(dto);
-        comment.updateBoard(boardService.findVerifiedBoard(boardId));
-        comment.updateMember(memberPrincipal.getMember());
+    public CommentDto.Response create(MemberPrincipal memberPrincipal, CommentDto.Post dto) {
+        Board board = boardService.findVerifiedBoard(dto.getBoardId());
+        Comment comment = commentMapper.toEntity(dto, board, memberPrincipal.getMember());
+        board.addComment(comment);
         commentRepository.save(comment);
         return commentMapper.toResponse(comment);
     }
 
-    public CommentDto.Response modifyComment(Long commentId, MemberPrincipal memberPrincipal, CommentDto.Patch dto) {
-        Comment comment = findVerifyComment(commentId);
-        memberService.verifySameMember(memberPrincipal.getMember(), comment.getMember());
+    public CommentDto.Response update(Long id, MemberPrincipal memberPrincipal, CommentDto.Patch dto) {
+        Comment comment = findVerifiedComment(id);
+        memberService.compareMembers(memberPrincipal.getMember(), comment.getMember());
         comment.updateComment(dto.getContent());
         return commentMapper.toResponse(comment);
     }
 
-    public void deleteComment(Long commentId, MemberPrincipal memberPrincipal) {
-        Comment comment = findVerifyComment(commentId);
-        memberService.verifySameMember(memberPrincipal.getMember(), comment.getMember());
+    public void delete(Long id, MemberPrincipal memberPrincipal) {
+        Comment comment = findVerifiedComment(id);
+        memberService.compareMembers(memberPrincipal.getMember(), comment.getMember());
         commentRepository.delete(comment);
     }
 
-    private Comment findVerifyComment(Long commentId) {
-        return commentRepository.findById(commentId)
+    private Comment findVerifiedComment(Long id) {
+        return commentRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ExceptionCode.COMMENT_NOT_FOUND));
     }
 }

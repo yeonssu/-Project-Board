@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class CommentDto {
@@ -11,12 +12,18 @@ public class CommentDto {
     @Getter
     public static class Post {
 
+        @NotNull
+        private Long boardId;
+
         @NotBlank
         private String content;
     }
 
     @Getter
-    public static class Patch extends Post {
+    public static class Patch {
+
+        @NotBlank
+        private String content;
     }
 
     @Getter

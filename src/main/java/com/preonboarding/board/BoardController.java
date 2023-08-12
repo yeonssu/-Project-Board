@@ -4,8 +4,7 @@ import com.preonboarding.global.dto.MultiResponse;
 import com.preonboarding.member.MemberPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,42 +20,43 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
-    public ResponseEntity<BoardDto.Response> createBoard(@RequestBody @Valid BoardDto.Post dto,
-                                                         @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        BoardDto.Response response = boardService.createBoard(dto, memberPrincipal);
+    public ResponseEntity<BoardDto.Response> create(@RequestBody @Valid BoardDto.Request dto,
+                                                    @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        BoardDto.Response response = boardService.create(dto, memberPrincipal);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<MultiResponse<BoardDto.Response>> getBoards(@PageableDefault(page = 1, size = 30) Pageable pageable) {
-        Page<BoardDto.Response> response = boardService.getBoards(pageable);
-        return new ResponseEntity<>(new MultiResponse<>(response.getContent(), response), HttpStatus.OK);
+    public ResponseEntity<MultiResponse<BoardDto.Response>> getAll(@RequestParam int page) {
+        Page<BoardDto.Response> response = boardService.getAll(PageRequest.of(page - 1, 20));
+        MultiResponse<BoardDto.Response> pageResponse = new MultiResponse<>(response.getContent(), response);
+        return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/{board-id}")
-    public ResponseEntity<BoardDto.DetailResponse> getBoard(@PathVariable("board-id") Long boardId) {
-        BoardDto.DetailResponse response = boardService.getBoard(boardId);
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardDto.DetailResponse> get(@PathVariable Long id) {
+        BoardDto.DetailResponse response = boardService.get(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/{board-id}")
-    public ResponseEntity<BoardDto.Response> modifyBoard(@PathVariable("board-id") Long boardId,
-                                                         @RequestBody @Valid BoardDto.Patch dto,
-                                                         @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        BoardDto.Response response = boardService.modifyBoard(boardId, dto, memberPrincipal);
+    @PatchMapping("/{id}")
+    public ResponseEntity<BoardDto.Response> update(@PathVariable Long id,
+                                                    @RequestBody @Valid BoardDto.Request dto,
+                                                    @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        BoardDto.Response response = boardService.update(id, dto, memberPrincipal);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{board-id}")
-    public ResponseEntity<BoardDto.Response> deleteBoard(@PathVariable("board-id") Long boardId,
-                                                         @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        boardService.deleteBoard(boardId, memberPrincipal);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BoardDto.Response> delete(@PathVariable Long id,
+                                                    @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        boardService.delete(id, memberPrincipal);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/{board-id}/likes")
-    public ResponseEntity<BoardDto.Response> likeBoard(@PathVariable("board-id") Long boardId) {
-        boardService.likeBoard(boardId);
+    @PostMapping("/{id}/likes")
+    public ResponseEntity<BoardDto.Response> like(@PathVariable Long id) {
+        boardService.like(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

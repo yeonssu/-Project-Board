@@ -17,7 +17,6 @@ public class Member extends Timestamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
     private Long id;
 
     @Column(nullable = false, length = 45, unique = true)
@@ -34,17 +33,10 @@ public class Member extends Timestamp {
     private List<String> roles = new ArrayList<>();
 
     @Builder
-    public Member(String email, String nickname) {
+    public Member(String email, String nickname, String password, List<String> roles) {
         this.email = email;
         this.nickname = nickname;
-    }
-
-    public void updatePassword(String password) {
         this.password = password;
-    }
-
-    public void updateRoles(List<String> roles) {
         this.roles = roles;
     }
 }
-

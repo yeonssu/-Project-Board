@@ -1,7 +1,7 @@
 package com.preonboarding.board;
 
+import com.preonboarding.comment.Comment;
 import com.preonboarding.member.Member;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,6 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,7 +19,6 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
     private Long id;
 
     @Column(nullable = false, columnDefinition = "TEXT")
@@ -33,24 +34,22 @@ public class Board {
     private Long likeCount = 0L;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn
     private Member member;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private final List<Comment> comments = new ArrayList<>();
+
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(updatable = false)
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @LastModifiedDate
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @Builder
-    public Board(String title, String content) {
+    public Board(String title, String content, Member member) {
         this.title = title;
         this.content = content;
-    }
-
-    public void updateMember(Member member) {
         this.member = member;
     }
 
@@ -58,6 +57,10 @@ public class Board {
         this.title = title;
         this.content = content;
         setUpdatedAt();
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 
     public void addViewCount() {

@@ -82,7 +82,7 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager);
-            jwtAuthenticationFilter.setFilterProcessesUrl("/api/members/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/api/members/signin");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(jwtTokenProvider));
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 

@@ -9,6 +9,7 @@ import java.util.List;
 public class MultiResponse<T> {
 
     private final List<T> data;
+
     private final PageInfo pageInfo;
 
     public MultiResponse(List<T> data, Page<T> page) {

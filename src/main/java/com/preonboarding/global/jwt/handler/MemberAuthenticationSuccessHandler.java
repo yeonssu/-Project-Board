@@ -29,6 +29,7 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
 
         String accessToken = jwtTokenProvider.generateAccessToken(member.getEmail(), member.getRoles());
         jwtTokenProvider.sendAccessToken(response, accessToken);
-        ResponseUtils.setResponseStatus(response, HttpServletResponse.SC_OK, new MemberDto.Response(member));
+        MemberDto.Response dto = new MemberDto.Response(member.getId(), member.getEmail(), member.getNickname());
+        ResponseUtils.setResponseStatus(response, HttpServletResponse.SC_OK, dto);
     }
 }

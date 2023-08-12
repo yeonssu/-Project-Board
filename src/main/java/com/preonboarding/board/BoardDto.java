@@ -10,17 +10,13 @@ import java.util.List;
 public class BoardDto {
 
     @Getter
-    public static class Post {
+    public static class Request {
 
         @NotBlank
         private String title;
 
         @NotBlank
         private String content;
-    }
-
-    @Getter
-    public static class Patch extends Post {
     }
 
     @Getter

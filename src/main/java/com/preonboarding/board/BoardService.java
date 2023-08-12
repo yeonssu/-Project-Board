@@ -7,7 +7,6 @@ import com.preonboarding.member.MemberPrincipal;
 import com.preonboarding.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,45 +28,44 @@ public class BoardService {
 
     private final CommentMapper commentMapper;
 
-    public BoardDto.Response createBoard(BoardDto.Post dto, MemberPrincipal memberPrincipal) {
-        Board board = boardMapper.toEntity(dto);
-        board.updateMember(memberPrincipal.getMember());
+    public BoardDto.Response create(BoardDto.Request dto, MemberPrincipal memberPrincipal) {
+        Board board = boardMapper.toEntity(dto, memberPrincipal.getMember());
         boardRepository.save(board);
         return boardMapper.toResponse(board);
     }
 
-    public Page<BoardDto.Response> getBoards(Pageable pageable) {
-        Page<Board> boards = boardRepository.findAll(PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort()));
+    public Page<BoardDto.Response> getAll(Pageable pageable) {
+        Page<Board> boards = boardRepository.findAll(pageable);
         return boardMapper.toPageResponse(boards);
     }
 
-    public BoardDto.DetailResponse getBoard(Long boardId) {
-        Board board = findVerifiedBoard(boardId);
+    public BoardDto.DetailResponse get(Long id) {
+        Board board = findVerifiedBoard(id);
         board.addViewCount();
-        List<CommentDto.Response> comments = getCommentsOfBoard(boardId);
+        List<CommentDto.Response> comments = getCommentsOfBoard(id);
         return boardMapper.toDetailResponse(board, comments);
     }
 
-    public BoardDto.Response modifyBoard(Long boardId, BoardDto.Patch dto, MemberPrincipal memberPrincipal) {
+    public BoardDto.Response update(Long boardId, BoardDto.Request dto, MemberPrincipal memberPrincipal) {
         Board board = findVerifiedBoard(boardId);
-        memberService.verifySameMember(memberPrincipal.getMember(), board.getMember());
+        memberService.compareMembers(memberPrincipal.getMember(), board.getMember());
         board.updateBoard(dto.getTitle(), dto.getContent());
         return boardMapper.toResponse(board);
     }
 
-    public void deleteBoard(Long boardId, MemberPrincipal memberPrincipal) {
-        Board board = findVerifiedBoard(boardId);
-        memberService.verifySameMember(memberPrincipal.getMember(), board.getMember());
+    public void delete(Long id, MemberPrincipal memberPrincipal) {
+        Board board = findVerifiedBoard(id);
+        memberService.compareMembers(memberPrincipal.getMember(), board.getMember());
         boardRepository.delete(board);
     }
 
-    public void likeBoard(Long boardId) {
-        Board board = findVerifiedBoard(boardId);
+    public void like(Long id) {
+        Board board = findVerifiedBoard(id);
         board.addLikeCount();
     }
 
-    public Board findVerifiedBoard(Long boardId) {
-        return boardRepository.findById(boardId)
+    public Board findVerifiedBoard(Long id) {
+        return boardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ExceptionCode.BOARD_NOT_FOUND));
     }
 

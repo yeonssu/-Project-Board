@@ -1,6 +1,5 @@
 package com.preonboarding.member;
 
-import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;
@@ -23,7 +22,7 @@ public class MemberDto {
     }
 
     @Getter
-    public static class LoginDto {
+    public static class Signin {
 
         @Email
         private String email;
@@ -41,10 +40,10 @@ public class MemberDto {
 
         private final String nickname;
 
-        public Response(Member member) {
-            this.id = member.getId();
-            this.email = member.getEmail();
-            this.nickname = member.getNickname();
+        public Response(Long id, String email, String nickname) {
+            this.id = id;
+            this.email = email;
+            this.nickname = nickname;
         }
     }
 }

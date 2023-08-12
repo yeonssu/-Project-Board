@@ -1,5 +1,7 @@
 package com.preonboarding.comment;
 
+import com.preonboarding.board.Board;
+import com.preonboarding.member.Member;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -8,10 +10,8 @@ import java.util.stream.Collectors;
 @Component
 public class CommentMapper {
 
-    public Comment toEntity(CommentDto.Post dto) {
-        return Comment.builder()
-                .content(dto.getContent())
-                .build();
+    public Comment toEntity(CommentDto.Post dto, Board board, Member member) {
+        return new Comment(dto.getContent(), board, member);
     }
 
     public CommentDto.Response toResponse(Comment comment) {
@@ -25,6 +25,8 @@ public class CommentMapper {
     }
 
     public List<CommentDto.Response> toListResponse(List<Comment> comments) {
-        return comments.stream().map(this::toResponse).collect(Collectors.toList());
+        return comments.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 }

@@ -10,32 +10,31 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/boards/{board-id}/comments")
-    public ResponseEntity<CommentDto.Response> createComment(@PathVariable("board-id") Long boardId,
-                                                             @AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                                             @RequestBody @Valid CommentDto.Post dto) {
-        CommentDto.Response response = commentService.createComment(boardId, memberPrincipal, dto);
+    @PostMapping
+    public ResponseEntity<CommentDto.Response> create(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
+                                                      @RequestBody @Valid CommentDto.Post dto) {
+        CommentDto.Response response = commentService.create(memberPrincipal, dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PatchMapping("/comments/{comment-id}")
-    public ResponseEntity<CommentDto.Response> createComment(@PathVariable("comment-id") Long commentId,
-                                                             @AuthenticationPrincipal MemberPrincipal memberPrincipal,
-                                                             @RequestBody @Valid CommentDto.Patch dto) {
-        CommentDto.Response response = commentService.modifyComment(commentId, memberPrincipal, dto);
+    @PatchMapping("/{id}")
+    public ResponseEntity<CommentDto.Response> update(@PathVariable Long id,
+                                                      @AuthenticationPrincipal MemberPrincipal memberPrincipal,
+                                                      @RequestBody @Valid CommentDto.Patch dto) {
+        CommentDto.Response response = commentService.update(id, memberPrincipal, dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/comments/{comment-id}")
-    public ResponseEntity<CommentDto.Response> createComment(@PathVariable("comment-id") Long commentId,
-                                                             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        commentService.deleteComment(commentId, memberPrincipal);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CommentDto.Response> delete(@PathVariable Long id,
+                                                      @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        commentService.delete(id, memberPrincipal);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
