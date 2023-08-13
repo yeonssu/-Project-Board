@@ -30,10 +30,8 @@
     - [GET요청] http://localhost:8080/api/boards
     - 회원이 아니더라도 게시글 조회는 가능하다
     - Pagenation으로 구현하였다
-    - page default : page = 1, size = 30
-    - path parameter로 페이지 번호와 사이즈, 정렬 기준을 설정할 수 있다
-    <br>( 예시 1 ) ?page=2&size=15&sort=likeCount,desc
-    <br>( 예시 2 ) ?page=2&size=15&sort=viewCount,asc
+    - 페이지 사이즈는 20이며, request parameter로 페이지 번호를 설정할 수 있다
+    <br>( 예시 ) ?page=2
 - 특정 게시글 조회
     - [GET요청] http://localhost:8080/api/boards/{id}
     - 회원이 아니더라도 게시글 조회는 가능하다
