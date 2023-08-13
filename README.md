@@ -13,7 +13,7 @@
     - 비밀번호 조건 : 8자 이상
     - 비밀번호는 암호화하여 저장된다
 - 사용자 로그인
-    - [POST요청] http://localhost:8080/api/members/sighin
+    - [POST요청] http://localhost:8080/api/members/signin
     - Request Body(JSON)로 이메일, 비밀번호를 받을 수 있어야한다
     - 이메일 조건 : @ 포함
     - 비밀번호 조건 : 8자 이상
