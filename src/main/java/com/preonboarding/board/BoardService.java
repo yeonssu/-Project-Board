@@ -41,7 +41,7 @@ public class BoardService {
 
     public BoardDto.DetailResponse get(Long id) {
         Board board = findVerifiedBoard(id);
-        board.addViewCount();
+        boardRepository.addViewCount(board.getId());
         List<CommentDto.Response> comments = getCommentsOfBoard(id);
         return boardMapper.toDetailResponse(board, comments);
     }

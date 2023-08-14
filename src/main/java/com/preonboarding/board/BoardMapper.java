@@ -15,14 +15,31 @@ public class BoardMapper {
     }
 
     public BoardDto.Response toResponse(Board board) {
-        return new BoardDto.Response(board);
+        return BoardDto.Response.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .viewCount(board.getViewCount())
+                .likeCount(board.getLikeCount())
+                .nickname(board.getMember().getNickname())
+                .build();
+    }
+
+    public BoardDto.DetailResponse toDetailResponse(Board board, List<CommentDto.Response> comments) {
+        return BoardDto.DetailResponse.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .viewCount(board.getViewCount() + 1)
+                .likeCount(board.getLikeCount())
+                .nickname(board.getMember().getNickname())
+                .createdAt(board.getCreatedAt())
+                .updatedAt(board.getUpdatedAt())
+                .comments(comments)
+                .build();
     }
 
     public Page<BoardDto.Response> toPageResponse(Page<Board> boards) {
         return boards.map(this::toResponse);
-    }
-
-    public BoardDto.DetailResponse toDetailResponse(Board board, List<CommentDto.Response> comments) {
-        return new BoardDto.DetailResponse(board, comments);
     }
 }
