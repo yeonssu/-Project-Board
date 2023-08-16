@@ -28,7 +28,7 @@ public class CommentController {
                                                       @AuthenticationPrincipal MemberPrincipal memberPrincipal,
                                                       @RequestBody @Valid CommentDto.Patch dto) {
         CommentDto.Response response = commentService.update(id, memberPrincipal, dto);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
