@@ -2,7 +2,7 @@
 - 성명 : 이연수
 - 기술 스택 : Java / Spring Boot
 - 프로젝트 설명 : 원티드 프리온보딩 사전과제 RESTful 게시판
-- 데모 영상 링크 : 구현한 API의 동작을 촬영 필요
+- 데모 영상 링크 : https://drive.google.com/file/d/16u0nW1IFfIm58wl0pblgzBUvJF9V4r6H/view?usp=drive_link
 
 ## 💻 프로젝트 주요 내용
 ### 사용자 관련 요청
@@ -25,7 +25,7 @@
     - Request Body(JSON)로 제목, 내용을 받을 수 있어야한다
     - 회원만 게시글을 작성할 수 있도록 구현하였다
     <br>→ Request Header에 Authorization 값으로 로그인된 토큰을 보내주어야한다
-    - 생성된 게시글은 제목, 내용, 조회수, 좋아요수, 생성날짜, 수정날짜를 필드로 갖는다
+    - 생성된 게시글은 제목, 내용, 조회수, 좋아요수를 필드로 갖는다
 - 게시글 목록 조회
     - [GET요청] http://localhost:8080/api/boards
     - 회원이 아니더라도 게시글 조회는 가능하다
@@ -36,6 +36,7 @@
     - [GET요청] http://localhost:8080/api/boards/{id}
     - 회원이 아니더라도 게시글 조회는 가능하다
     - 제목, 내용, 작성자, 조회수, 좋아요수, 생성날짜, 수정날짜, 해당 게시글의 모든 댓글을 Response로 갖는다
+    - 특정 게시글 조회 시, viewCount를 1만큼 증가 시킨다
     - 댓글 조회는 게시글을 통해서만 가능하다
     - 댓글 조회 시, 내용, 작성자의 닉네임, 생성날짜, 수정날짜가 보이도록 하였다
     - 삭제된 댓글은 조회가 불가능하다
@@ -76,4 +77,8 @@
 <img src="images/ERD.png">
 
 ##  📑 API 명세
-- 추가 예정
+API 문서 링크 : https://dustn7197s-organization.gitbook.io/wanted-pre-onboarding-backend/
+
+<img src="images/API-회원.png">
+<img src="images/API-게시글.png">
+<img src="images/API-댓글.png">
