@@ -1,7 +1,7 @@
-## ⭐️ wanted-pre-onboarding-backend
+## ⭐️ 기본 게시판 프로젝트
 - 성명 : 이연수
 - 기술 스택 : Java / Spring Boot
-- 프로젝트 설명 : 원티드 프리온보딩 사전과제 RESTful 게시판
+- 프로젝트 설명 : RESTful 게시판 Refactoring
 - 데모 영상 링크 : https://drive.google.com/file/d/16u0nW1IFfIm58wl0pblgzBUvJF9V4r6H/view?usp=drive_link
 
 ## 💻 프로젝트 주요 내용
